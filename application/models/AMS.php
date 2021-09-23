@@ -1050,7 +1050,50 @@ WHERE        (dbo.View_156.EmpPic IS NOT NULL)");
       return $query->result_array();   
           }
 public function getlabelinfo(){
-    
+    $MIS = $this->load->database('MIS', TRUE);
+     $query=$MIS->query("SELECT KitID, LabelType, ID FROM tbl_Label_Info");
+      return $query->result_array();   
 }
         
+        public function Kitinformation($Type){
+    $MIS = $this->load->database('MIS', TRUE);
+   
+        return  $MIS
+                ->where("ID", $Type)
+                ->get("tbl_Label_Info")
+                ->result();
+}
+public function insert_data($start_quantity,$end_quantity,$kitid ,$labelid){
+     $MIS = $this->load->database('MIS', TRUE);
+     
+    
+    for($start_quantity; $start_quantity<=$end_quantity; $start_quantity++){
+ $date = date("Y-m-d H:i:s");
+ if($labelid == 1){
+  $query = $MIS->query("INSERT INTO tbl_Label_Rec
+      (ID,KitName,Qty,EntryDate,SerialNO,RullQty, NoOFRulls) VALUES ('$labelid', '$kitid',5,'$date', $start_quantity,'4','11245')");;
+
+ }else{
+     $query = $MIS->query("INSERT INTO tbl_Label_Rec
+      (ID,KitName,Qty,EntryDate,SerialNO,RullQty, NoOFRulls) VALUES ('$labelid', '$kitid',5,'$date', $start_quantity,'8','4813')");;
+ }       
+                }
+                // if ($query) {
+                //         $this->session->set_flashdata('Proinfo', 'Data has been Saved');
+                //         redirect('kitsReceived');
+                //     } else {
+                //         $this->session->set_flashdata('danger', 'There is an error while creating.');
+                //         redirect('kitsReceived');
+                //     }
+                ///die;
+            }
+public function getDate($date1,$date2,$labelid){
+      $MIS = $this->load->database('MIS', TRUE);
+        return  $MIS
+                ->where("EntryDate>=", $date1)
+                 ->where("EntryDate<=", $date2)
+                  ->where("ID", $labelid)
+                ->get("View_Label")
+                ->result();
+}
 }

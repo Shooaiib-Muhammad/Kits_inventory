@@ -212,95 +212,12 @@ if(!($this->session->has_userdata('user_id'))){
 </div>
 
 
-<div id="ModalAss" class="modal fade">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title">Add/Edit  Charts of Asset</h1>
-            </div>
-            <div class="modal-body">
-                <form name="formChart" id="myformChart" method="POST" action="">
-                    <!-- <input type="hidden" name="_token" value=""> -->
-                    <div class="form-group" style="display:none;">
-                        <label class="control-label">ID</label>
-                        <div>
-                            <input type="text" class="form-control input-lg" id="project-bid"  name="cid">
-                        </div>
-                    </div>
-                   
-                     <div class="form-group">
-                     <div>
-                     <label for="sel1">Production Type :</label>
-                        <select class="form-control" id="sel1" name="assetProdType" >
-                        <option value="0" disabled>Select one of the following</option>
-                        <option value="1">Production</option>
-                             <option value="2">Non Production</option>
-                            </select>
-                        </div> 
-                   </div>
-                      <div class="form-group">
-                     <div>
-                     <label for="sel1">Asset Type :</label>
-                        <select class="form-control" id="sel1" name="assetChartType" >
-                        <option value="0" disabled>Select one of the following</option>
-                        <?php
-                                   if (isset($Assettype)) {
-                                  foreach ($Assettype as $Key) {
-                           
-                         ?>
-
-                        <option value="<?php echo $Key['TID'] ?>" ><?php echo $Key['AssertType'] ?></option>
-                        <?php
-                        }
-                       }
-                  ?>
-    
-                            </select>
-                        </div> 
-                   </div>
-                     <div class="form-group">
-                        <label class="control-label">Name :</label>
-                        <div>
-                            <input type="text" class="form-control input-lg" name="assetNameChart" placeholder="Name">
-                        </div>
-                    </div>
-             
-                     <div class="form-group">
-                        <label class="control-label">UOM: </label>
-                        <div>
-                            <input type="text" class="form-control input-lg" name="UOM" placeholder="UOM">
-                        </div>
-                    </div>
-                    <!-- <div class="form-group">
-                        <label class="control-label">Password</label>
-                        <div>
-                            <input type="password" class="form-control input-lg" name="password">
-                        </div>
-                    </div> -->
-                    <div class="form-group">
-                        <div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="assetChartStatus"> Status
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div>
-                        <button type="submit" class="btn btn-success" id="saveAssetChart" >Save</button>
-                        <button type="submit" class="btn btn-success" id="updateAssetChart" style="display:none" >Update</button>   
-
-                            <button class="btn btn-success" data-dismiss="modal">Close</button>
-                          
-                 </div>
-                    </div>
-                </form>
-       
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-        </div>
+<?php
+  $Month=date('m');
+$Year=date('Y');
+$Day=date('d');
+$CurrentDate=$Year.'-'.$Month.'-'.$Day;
+?>
 <br><br>
 <div id="panel-7" class="panel">
                                     <div class="panel-hdr">
@@ -318,6 +235,7 @@ if(!($this->session->has_userdata('user_id'))){
                                             
                                            
                                             <div class="tab-content py-3">
+                                               
                                                 <div class="row">
                                              
                        
@@ -326,14 +244,14 @@ if(!($this->session->has_userdata('user_id'))){
                        <label >Start Date :</label>
                         <div class="form-group-inline">
                             
-                            <input name="date" id="date1" class="form-control" type="date">
+                            <input name="date" id="date1" class="form-control" value="<?php echo $CurrentDate;?>" type="date">
                         </div>
                     </div>
                     <div class="col-md-3">
                        <label >End Date</label>
                         <div class="form-group-inline">
                             
-                            <input name="date" id="date2" class="form-control" type="date">
+                            <input name="date" id="date2" class="form-control" value="<?php echo $CurrentDate;?>"  type="date">
                         </div>
                     </div>
                     </div>
@@ -343,9 +261,19 @@ if(!($this->session->has_userdata('user_id'))){
                     <div class="form-group">
                             <lable class="form-control-label" for="duration">Label Type:</lable>
                             
-                            <select class="form-control" name="duration" id="duration">
+                            <select class="form-control" name="Type" id="Type">
                              <option value="">Select Duration :</option>
-                               
+                               <?php
+                                
+                                  foreach ($labelinfor as $Key) {
+                           
+                         ?>
+
+                        <option value="<?php echo $Key['ID'] ?>" ><?php echo $Key['LabelType'] ?></option>
+                        <?php
+                        }
+                       
+                  ?>
                             </select>
                         </div>
                         </div>
@@ -353,32 +281,34 @@ if(!($this->session->has_userdata('user_id'))){
                        <label >Kit Name:</label>
                         <div class="form-group-inline">
                             
-                            <input name="KITName" id="date2" class="form-control" type="text">
+                            <input name="KITName" id="Kitname" class="form-control" type="text">
+                             <input name="ID" id="ID" class="form-control" type="text" hidden="true" >
                         </div>
                     </div>
                        <div class="col-md-2">
                        <label >Start Range :</label>
                         <div class="form-group-inline">
                             
-                            <input name="SR" id="date2" class="form-control" type="text">
+                            <input name="SR" id="start_quantity" class="form-control" type="text">
                         </div>
                     </div>
                        <div class="col-md-2">
                        <label >End Range :</label>
                         <div class="form-group-inline">
                             
-                            <input name="ER" id="date2" class="form-control" type="text">
+                            <input name="ER" id="end_quantity" class="form-control" type="text">
                         </div>
                     </div>
                      <div class="col-md-3">
                        <label style="background-color: #fff; color: #fff;" >Schedule End Date</label>
                         <div class="form-group-inline">
                             
-                             <button class="btn btn-primary" id="searchdata" >Save</button>
+                             <button class="btn btn-primary" id="enter" >Save</button>
                         </div>
                     </div>
                       
 </div>
+                   
   <br><br>
 <div class="row">
      <div class="col-md-8">
@@ -406,7 +336,7 @@ if(!($this->session->has_userdata('user_id'))){
                                         </div>
                                     </div>
                                 </div>
-     <!--Table responsive-->
+   
     
                             </div>
                         </div>
@@ -415,227 +345,75 @@ if(!($this->session->has_userdata('user_id'))){
                     <?php
         $this->load->view('after-main');
        ?>
-        <!-- END Page Settings -->
-        <!-- base vendor bundle: 
-			 DOC: if you remove pace.js from core please note on Internet Explorer some CSS animations may execute before a page is fully loaded, resulting 'jump' animations 
-						+ pace.js (recommended)
-						+ jquery.js (core)
-						+ jquery-ui-cust.js (core)
-						+ popper.js (core)
-						+ bootstrap.js (core)
-						+ slimscroll.js (extension)
-						+ app.navigation.js (core)
-						+ ba-throttle-debounce.js (core)
-						+ waves.js (extension)
-						+ smartpanels.js (extension)
-						+ src/../jquery-snippets.js (core) -->
+      
 
 <script>
     
 $(document).ready(function(){
-    let today = new Date();
-let yesterday = new Date();
+    $("select[name=Type]").change(function() {
 
-yesterday.setDate(today.getDate() - 1);
-
-    document.getElementById('date').valueAsDate =new Date();
-
-          let current = new Date();
-     current.setMonth(current.getMonth()-1);
-   let next = new Date();
-     next.setMonth(next.getMonth()+1);
-     document.getElementById('date1').valueAsDate = new Date();
-      document.getElementById('date2').valueAsDate = new Date();
-        $('#data').after('<br><div id="nav" class="pagination"></div>');
-        var rowsShown = 10;
-        var rowsTotal = $('#data tbody tr').length;
-        var numPages = rowsTotal/rowsShown;
-        for(i = 0;i < numPages;i++) {
-            var pageNum = i + 1;
-            $('#nav').append('<li class="page-item"><a class="page-link" href="#" rel="'+i+'">'+pageNum+'</a> &nbsp;&nbsp; ');
-        }
-        $('#data tbody tr').hide();
-        $('#data tbody tr').slice(0, rowsShown).show();
-        $('#nav a:first').addClass('active');
-        $('#nav a').bind('click', function(){
-
-            $('#nav a').removeClass('active');
-            $(this).addClass('active');
-            var currPage = $(this).attr('rel');
-            var startItem = currPage * rowsShown;
-            var endItem = startItem + rowsShown;
-            $('#data tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
-                    css('display','table-row').animate({opacity:1}, 300);
+            loadtype()
+            loadDate()
         });
+        function loadtype(){
 
-        $('#tableExport').on('click',".btn-delete-asset-type",function(e){
-            llid = $(this).attr('data-value')
-      postData = {
-        llid
-      }
-     
-      $('.btn-confirm-del-type').click(function(e){
-    url = '<?php echo base_url('assettype/deleteAssetType') ?>'
-      
-    $.post(url,postData,
-  function(data, status){
-    window.location.reload();  
-    
-  });
-
-      
-    })
-});
-
-$('#tableExport2').on('click',".btn-delete-asset-chart",function(e){
-            llid = $(this).attr('data-value')
-      postData = {
-        llid
-      }
-     
-      $('.btn-confirm-del-chart').click(function(e){
-    url = '<?php echo base_url('assettype/deleteAssetChart') ?>'
-      
-    $.post(url,postData,
-  function(data, status){
-    window.location.reload();  
-    
-  });
-
-      
-    })
-});
-
-
-$('#createAssetType').click(function(e){
-    $("#saveAssetType").css("display", "inline-block");
-    $("#updateAssetType").css("display", "none");
-    $("#myForm").trigger("reset");
-    $('form[name=form]').attr('action','<?php echo base_url('assettype/AddAssetType') ?>');
-});
-
-$('#createAssetChart').click(function(e){
-    $('select[name="assetProdType"]').val('0');
-    $('select[name="assetChartType"]').val('0');
-    $("#saveAssetChart").css("display", "inline-block");
-    $("#updateAssetChart").css("display", "none");
-    $("#myformChart").trigger("reset");
-    $('select[name=assetProdType]').val('0');
-    $('select[name=assetChartType]').val('0');
-    $('form[name=formChart]').attr('action','<?php echo base_url('assettype/AddAssetChart') ?>');
-});
-
-
-$('#tableExport').on('click',".btn-edit-asset-type",function(e){
-    $("#saveAssetType").css("display", "none");
-    $("#updateAssetType").css("display", "inline-block");
-    $('form[name=form]').attr('action','<?php echo base_url('assettype/editAssetTypes') ?>');
-        var formData =[];
-            llid = $(this).attr('data-value');
-      postData = {
-        llid
-      }
-      console.log(llid);
-      url = '<?php echo base_url('assettype/getAssetType') ?>'
-      
-    $.post(url,postData,
-  function(data, status){
-    var returnedData = JSON.parse(data);
-   
-    $("input[name=tid]").val(returnedData[0].TID);
-    $("input[name=assetName]").val(returnedData[0].AssertType);
-
-    if(returnedData[0].status == 1){
-        $('input[name=assetStatus]').attr('Checked','Checked');
-    //$("").checked = true;
-}
-else{
-    $('input[name=assetStatus]').removeAttr('Checked');
-}
-
-  
-}); 
-
-
-});
-
-
-$('#tableExport2').on('click',".btn-edit-asset-chart",function(e){
-    $("#saveAssetChart").css("display", "none");
-    $("#updateAssetChart").css("display", "inline-block");
-    $('form[name=formChart]').attr('action','<?php echo base_url('assettype/editAssetCharts') ?>');
-        var formData =[];
-            llid = $(this).attr('data-value');
-      postData = {
-        llid
-      }
-      console.log(llid);
-      url = '<?php echo base_url('assettype/getChartValue') ?>'
-      
-    $.post(url,postData,
-  function(data, status){
-    var returnedData = JSON.parse(data);
-
-    $("input[name=cid]").val(returnedData[0].ID);
-    if(returnedData[0].PrdType == 1){
-        $('select[name="assetProdType"]').val('1')
-    }
-    else{
-        $('select[name="assetProdType"]').val('2')
-    }
-    
-   
-    url2 = '<?php echo base_url('assettype/getAssetTypes') ?>'    
-    $.post(url2,
-function(data, status){
-  var returnedData2 = JSON.parse(data);
-   dataaa1 = returnedData2;
-   console.log(returnedData[0]);
-   options = "<option value='' disabled>Select Asset Category  </option>"
-     for (i = 0; i < dataaa1.length; i++) {
-       if(returnedData[0].AssetType == dataaa1[i].TID){
-        options +=  '<option value="' + dataaa1[i].TID + '" selected>' + dataaa1[i].AssertType + '</option>'
-       }else{
-        options +=  '<option value="' + dataaa1[i].TID + '">' + dataaa1[i].AssertType + '</option>'
-       }
-     
-         }
-        $("select[name=assetChartType]").html(options)
-
-});
-    $("input[name=assetChartType]").val(returnedData[0].AssetType);
-    $("input[name=assetNameChart]").val(returnedData[0].Name);
-    $("input[name=UOM]").val(returnedData[0].UOM);
-
-    if(returnedData[0].Status == 1){
-        $('input[name=assetChartStatus]').attr('Checked','Checked');
-    //$("").checked = true;
-}
-else{
-    $('input[name=assetChartStatus]').removeAttr('Checked');
-}
+            var Type = $("select[name='Type']").val()
  
-}); 
+            url = "<?php echo base_url("index.php/kitsReceived/json_by_machine/") ?>" + Type 
+
+            $.get(url, function(data){
+            
+               console.log(data);
 
 
-})
+                    html = data[0].KitID
+                     html1 = data[0].ID
+                    // html += '<option value="'+element.SecID+'" >'+element.SecName+'</option>'
+                
+console.log(html);
+                $("#Kitname").val(html)
+                 $("#ID").val(html1)
+            })
+        }
+
+ function loadDate(){
+alert("Loading Date");
+            var Type = $("select[name='Type']").val()
+  let date1 = document.getElementById('date1').val();
+    let date2 = document.getElementById('date2').val();
+  alert(Type);
+  alert(date1);
+  alert(date2);
+            url = "<?php echo base_url("index.php/kitsReceived/getData/") ?>" + date1 + "/" + date2 + "/" + labelid
+alert(url);
+//             $.get(url, function(data){
+            
+//                console.log(data);
 
 
-    });
-</script>
-<script>
-
-document.getElementById("myAnchor").addEventListener("click", function(event){
-  event.preventDefault()
-  var x = document.getElementById("myDIV");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-
-
+//                     html = data[0].KitID
+//                      html1 = data[0].ID
+//                     // html += '<option value="'+element.SecID+'" >'+element.SecName+'</option>'
+                
+// console.log(html);
+//                 $("#Kitname").val(html)
+//                  $("#ID").val(html1)
+//             })
+        }
 });
+$('#enter').click(function(){
+    let start_quantity = document.getElementById('start_quantity').value;
+    let end_quantity = document.getElementById('end_quantity').value;
+    let kitid = $("#Kitname").val();
+    let labelid = $('#ID').val();
+  url = "<?php echo base_url('index.php/kitsReceived/insert_data/') ?>"+ start_quantity + "/" + end_quantity + "/" + kitid + "/" + labelid 
+  //alert(url);
+   $.get(url, function(data){
+            
+               console.log(data);
+location.reload();
+            })
+  });
 
 
 </script>  

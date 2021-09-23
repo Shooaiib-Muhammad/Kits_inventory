@@ -15,11 +15,37 @@ class kitsReceived extends CI_Controller
  		$data['Assettype'] = $this->ID->getAssetTypes();
 		$data['AssetChart'] = $this->ID->getAssetChart();
 		$data['labelinfor'] = $this->ID->getlabelinfo();
+  
         $this->load->view('Assettype',$data);
 
 		
     }
-
+   public function getDate($date1,$date2,$labelid){
+     $data = $this->ID->getDate($date1,$date2,$labelid);
+     print_r($date);
+     Die;
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_status_header(200)
+        ->set_output(json_encode($data));
+   }
+    public function insert_data($start_quantity,$end_quantity,$kitid ,$labelid){
+      $data = $this->ID->insert_data($start_quantity,$end_quantity,$kitid ,$labelid);
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_status_header(200)
+        ->set_output(json_encode($data));
+    }
+public function json_by_machine($Type){
+ 
+        $data = $this->ID->Kitinformation($Type);
+      
+       
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_status_header(200)
+        ->set_output(json_encode($data));
+    }
 	public function AddAssetType()
 	{
 	
