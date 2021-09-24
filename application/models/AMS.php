@@ -1071,11 +1071,11 @@ public function insert_data($start_quantity,$end_quantity,$kitid ,$labelid){
  $date = date("Y-m-d H:i:s");
  if($labelid == 1){
   $query = $MIS->query("INSERT INTO tbl_Label_Rec
-      (ID,KitName,Qty,EntryDate,SerialNO,RullQty, NoOFRulls) VALUES ('$labelid', '$kitid',5,'$date', $start_quantity,'4','11245')");;
+      (ID,KitName,Qty,EntryDate,SerialNO,RullQty, NoOFRulls) VALUES ('$labelid', '$kitid',1,'$date', $start_quantity,'4','11245')");;
 
  }else{
      $query = $MIS->query("INSERT INTO tbl_Label_Rec
-      (ID,KitName,Qty,EntryDate,SerialNO,RullQty, NoOFRulls) VALUES ('$labelid', '$kitid',5,'$date', $start_quantity,'8','4813')");;
+      (ID,KitName,Qty,EntryDate,SerialNO,RullQty, NoOFRulls) VALUES ('$labelid', '$kitid',1,'$date', $start_quantity,'8','4813')");;
  }       
                 }
                 // if ($query) {
@@ -1087,13 +1087,33 @@ public function insert_data($start_quantity,$end_quantity,$kitid ,$labelid){
                 //     }
                 ///die;
             }
-public function getDate($date1,$date2,$labelid){
+            
+public function getData($date1,$date2,$Type){
+
+$SYear=substr($date1,0,4);
+$SMonth=substr($date1,5,2);
+$SDay=substr($date1,-2,2);
+$EYear=substr($date2,0,4);
+    //echo "<br>";
+$EMonth=substr($date2,5,2);
+    //echo "<br>";
+$EDay=substr($date2,-2,2);
+ $StartDate=$SDay.'/'.$SMonth.'/'.$SYear;
+  $EndDate=$EDay.'/'.$EMonth.'/'.$EYear;
+
       $MIS = $this->load->database('MIS', TRUE);
-        return  $MIS
-                ->where("EntryDate>=", $date1)
-                 ->where("EntryDate<=", $date2)
-                  ->where("ID", $labelid)
-                ->get("View_Label")
-                ->result();
+                $query=$MIS->query("SELECT   TranDate, 323    KitName, Qty, CONVERT(varchar, IssueDate, 103) AS IssueDate, ISNULL(IssueStatus, 0) AS IssueStatus, SerialNo, ID, EntryDate, RecID, balance1, Reclabel
+FROM            dbo.View_Label
+WHERE       (EntryDate BETWEEN CONVERT(DATETIME, '$date1 00:00:00', 102) AND CONVERT(DATETIME, '$date2 00:00:00', 102)) AND (ID = $Type)");
+
+          return $query->result_array();   
+}
+public function updateRecord($RIDValue,$Status,$IssueDte){
+    $MIS = $this->load->database('MIS', TRUE);
+    $query = $MIS->query("UPDATE tbl_Label_Rec 
+            SET   IssueStatus  =  '$Status',IssueDate  =  '$IssueDte'
+          WHERE  RecID='$RIDValue'");
+            
+            
 }
 }

@@ -20,14 +20,25 @@ class kitsReceived extends CI_Controller
 
 		
     }
-   public function getDate($date1,$date2,$labelid){
-     $data = $this->ID->getDate($date1,$date2,$labelid);
-     print_r($date);
-     Die;
+				public function updateRecord($RIDValue,$RStatus,$IssueDte){
+if($RStatus=='on'){
+	$Status=1;
+}else{
+		$Status=0;
+	}
+$data = $this->ID->updateRecord($RIDValue,$Status,$IssueDte);
         return $this->output
         ->set_content_type('application/json')
         ->set_status_header(200)
         ->set_output(json_encode($data));
+
+				}
+				
+   public function getData($date1,$date2,$Type){
+    	$data['received'] =  $this->ID->getData($date1,$date2,$Type);
+					// print_r($data['received']);
+					// die;
+        $this->load->view('Data',$data);
    }
     public function insert_data($start_quantity,$end_quantity,$kitid ,$labelid){
       $data = $this->ID->insert_data($start_quantity,$end_quantity,$kitid ,$labelid);
@@ -167,6 +178,10 @@ public function json_by_machine($Type){
         
 
 	}
-  
+  public function updateKits(){
+			$RID = $this->input->post('RID');
+			Echo $RID;
+			die;
+		}
 	
 }

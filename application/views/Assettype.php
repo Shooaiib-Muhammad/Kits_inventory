@@ -281,7 +281,7 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
                        <label >Kit Name:</label>
                         <div class="form-group-inline">
                             
-                            <input name="KITName" id="Kitname" class="form-control" type="text">
+                            <input name="KITName" id="Kitname" class="form-control" type="text" readonly="true">
                              <input name="ID" id="ID" class="form-control" type="text" hidden="true" >
                         </div>
                     </div>
@@ -310,27 +310,23 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
 </div>
                    
   <br><br>
-<div class="row">
-     <div class="col-md-8">
-    <div class="table-responsive-lg">
-                        
-                                                <table class="table table-striped table-hover table-sm" id="tableExport">
-                                                     
+<div class="row" >
+    <div class="col-md-8" id="Data" >
+         <div class="table-responsive-lg">
+        <table class="table table-striped table-hover table-sm" id="tableExport">
                                                         <thead>
-                                                            <tr>
+                                                           
                                                                 <th>Kit Name</th>
                                                                 <th>Quantity</th>
                                                                 <th>issue Status</th>
                                                                 <th>Issuee Date</th>
-                                                                
-                                                            </tr>
+                                                                 <th>Action</th>
+                                                           
                                                         </thead>
-                                                        <tbody>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            </div>
+                                                       <tbody >
+                    </tbody>
+                    </table>
+    </div>
 </div>
                                             </div>
                                         </div>
@@ -350,17 +346,20 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
 <script>
     
 $(document).ready(function(){
+     $(".updatebtn").click(function(e) {
+alert('Heloo');
+     });
+
     $("select[name=Type]").change(function() {
 
             loadtype()
             loadDate()
         });
+        
         function loadtype(){
-
+//alert("Please select");
             var Type = $("select[name='Type']").val()
- 
             url = "<?php echo base_url("index.php/kitsReceived/json_by_machine/") ?>" + Type 
-
             $.get(url, function(data){
             
                console.log(data);
@@ -377,28 +376,34 @@ console.log(html);
         }
 
  function loadDate(){
-alert("Loading Date");
-            var Type = $("select[name='Type']").val()
-  let date1 = document.getElementById('date1').val();
-    let date2 = document.getElementById('date2').val();
-  alert(Type);
-  alert(date1);
-  alert(date2);
-            url = "<?php echo base_url("index.php/kitsReceived/getData/") ?>" + date1 + "/" + date2 + "/" + labelid
-alert(url);
-//             $.get(url, function(data){
-            
-//                console.log(data);
+//     document.getElementById('date').valueAsDate =new Date();
 
-
-//                     html = data[0].KitID
-//                      html1 = data[0].ID
-//                     // html += '<option value="'+element.SecID+'" >'+element.SecName+'</option>'
-                
-// console.log(html);
-//                 $("#Kitname").val(html)
-//                  $("#ID").val(html1)
-//             })
+//           let current = new Date();
+//      current.setMonth(current.getMonth()-1);
+//    let next = new Date();
+//      next.setMonth(next.getMonth()+1);
+//      document.getElementById('date1').valueAsDate = new Date();
+//       document.getElementById('date2').valueAsDate = new Date();
+//     var DMID= $('#DMID').val();
+//          var Date1 =  $('#date1').val();
+//   var Date2= $('#date2').val();
+// //   // //  console.log(Date1);
+//   url = '<?php echo base_url('index.php/schedules/data/') ?>' + Date1 + "/" + Date2 + "/" + DMID
+//     //alert(url);
+//   $.get(url, function(data) {
+//  //alert(data);
+//      $("#Data").html(data)
+//  });
+var Type = $("select[name='Type']").val()
+  var date1 =  $("#date1").val()
+    var date2 = $("#date2").val()
+  //alert(date1);
+            url = "<?php echo base_url("index.php/kitsReceived/getData/") ?>" + date1 + "/" + date2 + "/" + Type
+//alert(url);
+ $.get(url, function(data) {
+ //alert(data);
+     $("#Data").html(data)
+ });
         }
 });
 $('#enter').click(function(){
@@ -406,6 +411,7 @@ $('#enter').click(function(){
     let end_quantity = document.getElementById('end_quantity').value;
     let kitid = $("#Kitname").val();
     let labelid = $('#ID').val();
+   
   url = "<?php echo base_url('index.php/kitsReceived/insert_data/') ?>"+ start_quantity + "/" + end_quantity + "/" + kitid + "/" + labelid 
   //alert(url);
    $.get(url, function(data){
