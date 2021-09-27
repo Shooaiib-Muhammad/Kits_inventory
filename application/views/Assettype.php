@@ -299,6 +299,13 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
                             <input name="ER" id="end_quantity" class="form-control" type="text">
                         </div>
                     </div>
+                    <div class="col-md-3">
+                       <label >Received Date :</label>
+                        <div class="form-group-inline">
+                            
+                            <input name="date" id="Rdate" class="form-control" value="<?php echo $CurrentDate;?>" type="date">
+                        </div>
+                    </div>
                      <div class="col-md-3">
                        <label style="background-color: #fff; color: #fff;" >Schedule End Date</label>
                         <div class="form-group-inline">
@@ -318,6 +325,7 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
                                                            
                                                                 <th>Kit Name</th>
                                                                 <th>Quantity</th>
+                                                                <th>Received Date</th>
                                                                 <th>issue Status</th>
                                                                 <th>Issuee Date</th>
                                                                  <th>Action</th>
@@ -411,8 +419,8 @@ $('#enter').click(function(){
     let end_quantity = document.getElementById('end_quantity').value;
     let kitid = $("#Kitname").val();
     let labelid = $('#ID').val();
-   
-  url = "<?php echo base_url('index.php/kitsReceived/insert_data/') ?>"+ start_quantity + "/" + end_quantity + "/" + kitid + "/" + labelid 
+      let RDate = $("#Rdate").val();
+  url = "<?php echo base_url('index.php/kitsReceived/insert_data/') ?>"+ start_quantity + "/" + end_quantity + "/" + kitid + "/" + labelid  + "/" + RDate 
   //alert(url);
    $.get(url, function(data){
             

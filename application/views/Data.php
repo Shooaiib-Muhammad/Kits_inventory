@@ -8,9 +8,10 @@
                                                            
                                                                 <th>Kit Name</th>
                                                                 <th>Quantity</th>
+                                                                 <th>Received Date</th>
                                                                 <th>issue Status</th>
                                                                 <th>Issuee Date</th>
-                                                                   <th>TranDate</th>
+                                                                 
                                                                  <th>Action</th>
                                                            
                                                         </thead>
@@ -27,7 +28,7 @@ foreach ($received as $keys){
                                                                 
                                                             </td>
                                                              <td><?php Echo $keys['Qty'];?></td>
-                                                             
+                                                              <td><?php Echo $keys['TranDate'];?></td>
                                                              <input type="text" name="RID" id="RID<?php echo $RecID;?>" value="<?php echo $RecID;?>" hidden>
                                                              <td><?php if($Status==1){ ?>
                                                             <div class="custom-control custom-switch">
@@ -59,7 +60,7 @@ foreach ($received as $keys){
                                                               ?>
                                                              
                                                              </td>
-                                                             <td> <?php Echo $keys['TranDate'];?></td>
+                                                             
                                                                <td><?php if($Status==1){ ?>
                                                                 <button type="submit"  class="btn btn-success btn-sm updatebtn" id="btn.<?php echo $RecID;?>" disabled>issued</button>
                                                                <?php

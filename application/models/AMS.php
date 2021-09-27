@@ -1063,12 +1063,12 @@ public function getlabelinfo(){
                 ->get("tbl_Label_Info")
                 ->result();
 }
-public function insert_data($start_quantity,$end_quantity,$kitid ,$labelid){
+public function insert_data($start_quantity,$end_quantity,$kitid ,$labelid,$RDate){
      $MIS = $this->load->database('MIS', TRUE);
      
     
     for($start_quantity; $start_quantity<=$end_quantity; $start_quantity++){
- $date = date("Y-m-d H:i:s");
+ $date = $RDate;
  if($labelid == 1){
   $query = $MIS->query("INSERT INTO tbl_Label_Rec
       (ID,KitName,Qty,EntryDate,SerialNO,RullQty, NoOFRulls) VALUES ('$labelid', '$kitid',1,'$date', $start_quantity,'4','11245')");;
@@ -1102,7 +1102,7 @@ $EDay=substr($date2,-2,2);
   $EndDate=$EDay.'/'.$EMonth.'/'.$EYear;
 
       $MIS = $this->load->database('MIS', TRUE);
-                $query=$MIS->query("SELECT   TranDate, 323    KitName, Qty, CONVERT(varchar, IssueDate, 103) AS IssueDate, ISNULL(IssueStatus, 0) AS IssueStatus, SerialNo, ID, EntryDate, RecID, balance1, Reclabel
+                $query=$MIS->query("SELECT   TranDate,KitName, Qty, CONVERT(varchar, IssueDate, 103) AS IssueDate, ISNULL(IssueStatus, 0) AS IssueStatus, SerialNo, ID, EntryDate, RecID, balance1, Reclabel
 FROM            dbo.View_Label
 WHERE       (EntryDate BETWEEN CONVERT(DATETIME, '$date1 00:00:00', 102) AND CONVERT(DATETIME, '$date2 00:00:00', 102)) AND (ID = $Type)");
 

@@ -40,8 +40,9 @@ $data = $this->ID->updateRecord($RIDValue,$Status,$IssueDte);
 					// die;
         $this->load->view('Data',$data);
    }
-    public function insert_data($start_quantity,$end_quantity,$kitid ,$labelid){
-      $data = $this->ID->insert_data($start_quantity,$end_quantity,$kitid ,$labelid);
+    public function insert_data($start_quantity,$end_quantity,$kitid ,$labelid,$RDate){
+				
+      $data = $this->ID->insert_data($start_quantity,$end_quantity,$kitid ,$labelid,$RDate);
         return $this->output
         ->set_content_type('application/json')
         ->set_status_header(200)
