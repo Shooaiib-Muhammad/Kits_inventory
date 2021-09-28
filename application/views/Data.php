@@ -4,6 +4,24 @@
     ?>
     <script>
 
+ function loadDate(TID,RDate){
+   //alert("Called")
+   split_date = RDate.split("/");
+   //2020-09-28
+   let date_make = split_date[2] + "-" + split_date[1] + "-" +split_date[0];
+   //alert(date_make);
+var Type = TID
+  var date1 = date_make
+    var date2 =date_make
+  //alert(date1);
+            url = "<?php echo base_url("index.php/kitsReceived/getData/") ?>" + date1 + "/" + date2 + "/" + Type
+//alert(url);
+ $.get(url, function(data) {
+ //alert(data);
+     $("#Data").html(data)
+ });
+        }
+
   $(".updatebtn").click(function(e) {
      let id= this.id;
      let split_value = id.split(".");
@@ -11,22 +29,25 @@
      var RIDValue = $(`#RID${split_value[1]}`).val()
      var RStatus = $(`#customSwitch${split_value[1]}`).val()
      var IssueDte = $(`#iDate${split_value[1]}`).val()
-    
+    var RDate = $(`#RDate${split_value[1]}`).val()
+      var TID = $(`#TID${split_value[1]}`).val()
+      //alert(RDate)
+     
 console.log("RIDValue",RIDValue)
 console.log("RStatus",RStatus)
 console.log("IssueDte",IssueDte)
  url = "<?php echo base_url('index.php/kitsReceived/updateRecord/') ?>"+ RIDValue + "/" + RStatus + "/" + IssueDte
-  alert(url);
+  
+// alert(url);
    $.get(url, function(data){
             
-               console.log(data);
-location.reload();
+             loadDate(TID,RDate)
             })
 
      });
    
      </script>
-    <div class="table-responsive-lg">
+    <div class="table-responsive-lg" id="Data">
         <table class="table table-striped table-hover table-sm" id="tableExport">
                                                         <thead style="background-color:black; color:white;">
                                                            
@@ -55,6 +76,8 @@ foreach ($received as $keys){
                                                              <td><?php Echo $keys['Qty'];?></td>
                                                               <td><?php Echo $keys['TranDate'];?></td>
                                                              <input type="text" name="RID" id="RID<?php echo $RecID;?>" value="<?php echo $RecID;?>" hidden>
+                                                              <input type="text" name="RDate" id="RDate<?php echo $RecID;?>" value="<?php echo $keys['TranDate'];?>" hidden>
+                                                             <input type="text" name="TID" id="TID<?php echo $RecID;?>" value="<?php echo $keys['ID'];?>" hidden>
                                                              <td><?php if($Status==1){ ?>
                                                             <div class="custom-control custom-switch">
                                                                 <input type="checkbox" name="onoffswitch" class="custom-control-input" id="customSwitch<?php Echo $RecID ?>" checked>
@@ -87,7 +110,15 @@ foreach ($received as $keys){
                                                              </td>
                                                              
                                                                <td>
-                                                                <button type="button"  class="btn btn-success btn-sm updatebtn" id="btn.<?php echo $RecID;?>">issued</button>
+                                                                 <?php if($Status==1){ ?>
+                                                                <button type="button"  class="btn btn-primary btn-sm updatebtn" id="btn.<?php echo $RecID;?>" disabled="disabled">issued</button>
+                                                              <?php
+                                                                 }else{
+                                                                   ?>
+                                                                   <button type="button"  class="btn btn-info btn-sm updatebtn" id="btn.<?php echo $RecID;?>" >issued</button>
+                                                                   <?php
+                                                                 }
+                                                              ?>
                                                               </td>
                                                                
                                                                                               
