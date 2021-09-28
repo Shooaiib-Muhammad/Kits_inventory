@@ -318,7 +318,7 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
                    
   <br><br>
 <div class="row" >
-    <div class="col-md-8" id="Data" >
+    <div class="col-md-12" id="Data" >
          <div class="table-responsive-lg">
         <table class="table table-striped table-hover table-sm" id="tableExport">
                                                         <thead>
@@ -354,8 +354,13 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
 <script>
     
 $(document).ready(function(){
-     $(".updatebtn").click(function(e) {
-alert('Heloo');
+     $("#date1").change(function(e) {
+//alert('Heloo');
+loadDate()
+     });
+ $("#date2").change(function(e) {
+//alert('Heloo');
+loadDate()
      });
 
     $("select[name=Type]").change(function() {
@@ -384,24 +389,7 @@ console.log(html);
         }
 
  function loadDate(){
-//     document.getElementById('date').valueAsDate =new Date();
 
-//           let current = new Date();
-//      current.setMonth(current.getMonth()-1);
-//    let next = new Date();
-//      next.setMonth(next.getMonth()+1);
-//      document.getElementById('date1').valueAsDate = new Date();
-//       document.getElementById('date2').valueAsDate = new Date();
-//     var DMID= $('#DMID').val();
-//          var Date1 =  $('#date1').val();
-//   var Date2= $('#date2').val();
-// //   // //  console.log(Date1);
-//   url = '<?php echo base_url('index.php/schedules/data/') ?>' + Date1 + "/" + Date2 + "/" + DMID
-//     //alert(url);
-//   $.get(url, function(data) {
-//  //alert(data);
-//      $("#Data").html(data)
-//  });
 var Type = $("select[name='Type']").val()
   var date1 =  $("#date1").val()
     var date2 = $("#date2").val()

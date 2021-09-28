@@ -2,6 +2,30 @@
       <?php
       $this->load->view('header');
     ?>
+    <script>
+
+  $(".updatebtn").click(function(e) {
+     let id= this.id;
+     let split_value = id.split(".");
+ 
+     var RIDValue = $(`#RID${split_value[1]}`).val()
+     var RStatus = $(`#customSwitch${split_value[1]}`).val()
+     var IssueDte = $(`#iDate${split_value[1]}`).val()
+    
+console.log("RIDValue",RIDValue)
+console.log("RStatus",RStatus)
+console.log("IssueDte",IssueDte)
+ url = "<?php echo base_url('index.php/kitsReceived/updateRecord/') ?>"+ RIDValue + "/" + RStatus + "/" + IssueDte
+  alert(url);
+   $.get(url, function(data){
+            
+               console.log(data);
+location.reload();
+            })
+
+     });
+   
+     </script>
     <div class="table-responsive-lg">
         <table class="table table-striped table-hover table-sm" id="tableExport">
                                                         <thead style="background-color:black; color:white;">
@@ -23,6 +47,7 @@ foreach ($received as $keys){
  ?> 
 
  <tr>    
+   
                                                             <td><?php Echo $keys['SerialNo'];?>
                                                                
                                                                 
@@ -61,18 +86,11 @@ foreach ($received as $keys){
                                                              
                                                              </td>
                                                              
-                                                               <td><?php if($Status==1){ ?>
-                                                                <button type="submit"  class="btn btn-success btn-sm updatebtn" id="btn.<?php echo $RecID;?>" disabled>issued</button>
-                                                               <?php
+                                                               <td>
+                                                                <button type="button"  class="btn btn-success btn-sm updatebtn" id="btn.<?php echo $RecID;?>">issued</button>
+                                                              </td>
                                                                
-                                                               }else{
-?>
-<button type="submit"  class="btn btn-primary btn-sm updatebtn" id="btn.<?php echo $RecID;?>">issued</button>
-<?php
-                                                               }
-                                                               ?></td>
-                                                               
-                                                                                                 
+                                                                                              
          </tr>     
                                                    
  <?php
@@ -85,30 +103,7 @@ foreach ($received as $keys){
                                   <?php
         $this->load->view('Foter');
        ?>                      
-<script>
 
-
-     $(".updatebtn").click(function(e) {
-     let id= this.id;
-     let split_value = id.split(".");
- 
-     var RIDValue = $(`#RID${split_value[1]}`).val()
-     var RStatus = $(`#customSwitch${split_value[1]}`).val()
-     var IssueDte = $(`#iDate${split_value[1]}`).val()
-    
-// console.log("RIDValue",RIDValue)
-// console.log("RStatus",RStatus)
-// console.log("IssueDte",IssueDte)
- url = "<?php echo base_url('index.php/kitsReceived/updateRecord/') ?>"+ RIDValue + "/" + RStatus + "/" + IssueDte
-  //alert(url);
-   $.get(url, function(data){
-            
-               console.log(data);
-location.reload();
-            })
-
-     });
-     </script>
 
                                    
                                 
