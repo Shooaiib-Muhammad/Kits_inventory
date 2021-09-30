@@ -17,7 +17,7 @@ var Type = TID
             url = "<?php echo base_url("index.php/kitsReceived/getData/") ?>" + date1 + "/" + date2 + "/" + Type
 //alert(url);
  $.get(url, function(data) {
- //alert(data);
+ alert("Selected Kits is Isseud Successfully")
      $("#Data").html(data)
  });
         }

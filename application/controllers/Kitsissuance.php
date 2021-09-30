@@ -141,6 +141,19 @@ class Kitsissuance extends CI_Controller
         
 
 	}
-  
-	
+  public function 	 getPO($date1,$date2){
+
+$data['getPO'] = $this->ID->getpo($date1,$date2);
+$this->load->view('PO_Date',$data);
+		}
+	public function json_by_machine($PO){
+ 
+        $data = $this->ID->POQty($PO);
+      
+       
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_status_header(200)
+        ->set_output(json_encode($data));
+    }
 }

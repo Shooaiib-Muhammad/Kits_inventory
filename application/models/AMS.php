@@ -987,8 +987,7 @@ public function getAssets(){
         public function getAsset($Id){
             $query = $this->db->query("SELECT  *
             FROM            tbl_Assert
-            WHERE  AsstID = '$Id'"
-        );
+            WHERE  AsstID = '$Id'");
             return $query->result_array();
         }
 
@@ -1115,5 +1114,27 @@ public function updateRecord($RIDValue,$Status,$IssueDte){
           WHERE  RecID='$RIDValue'");
             
             
+}
+public function getpo($date1,$date2){
+
+  $MIS = $this->load->database('MIS', TRUE);
+   
+        // return  $MIS
+        //         ->where("printDate =>", $date1)
+        //         ->where("printDate =<", $date2)
+        //         ->get("view_label_print")
+        //         ->result();
+                  $query = $MIS->query("SELECT        POCode, PO, OrderQty, printDate
+FROM            view_label_print
+WHERE        (printDate BETWEEN '$date1' AND '$date2')");
+            return $query->result_array();
+}
+public function POQty($PO){
+  $MIS = $this->load->database('MIS', TRUE);
+   
+        return  $MIS
+                ->where("PO", $PO)
+                ->get("view_label_print")
+                ->result();
 }
 }

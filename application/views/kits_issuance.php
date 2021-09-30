@@ -302,7 +302,13 @@ if(!($this->session->has_userdata('user_id'))){
     </div><!-- /.modal-dialog -->
         </div>
 <br><br>
-<div id="panel-7" class="panel">
+<?php
+  $Month=date('m');
+$Year=date('Y');
+$Day=date('d');
+$CurrentDate=$Year.'-'.$Month.'-'.$Day;
+?>
+<div id="exampleModalEditMat"   class="panel">
                                     <div class="panel-hdr">
                                         <h2>
                                             Kits  <span class="fw-300"><i>Issuance</i></span>
@@ -326,33 +332,37 @@ if(!($this->session->has_userdata('user_id'))){
                        <label >Start Date :</label>
                         <div class="form-group-inline">
                             
-                            <input name="date" id="date1" class="form-control" type="date">
+                            <input name="date" id="date1" class="form-control" type="date" value="<?php echo $CurrentDate;?>" >
                         </div>
                     </div>
                     <div class="col-md-3">
                        <label >End Date</label>
                         <div class="form-group-inline">
                             
-                            <input name="date" id="date2" class="form-control" type="date">
+                            <input name="date" id="date2" class="form-control" type="date" value="<?php echo $CurrentDate;?>" >
                         </div>
                     </div>
-                     <div class="col-md-2">
+                    <div id="poSelectbox" >
+                        <div class="row">
+                     <div class="col-md-8" >
                        <div class="form-group">
-                            <lable class="form-control-label" for="duration">PO No:</lable>
-                            
-                            <select class="form-control" name="duration" id="duration">
-                             <option value="">Select Duration :</option>
+                            <lable class="form-control-label " for="duration">PO No:</lable>
+                            <br>
+                           <select class="form-control mySelectMatProEdit" data-live-search="true" searchable="Search here.."  name="PO" id="PO">
+                             <option value="">Select PO :</option>
                                
                             </select>
                         </div>
                     </div>
-                       <div class="col-md-2">
+                       <div class="col-md-4">
                        <label >Order Qty:</label>
                         <div class="form-group-inline">
                             
-                            <input name="SR" id="date2" class="form-control" type="text">
+                            <input name="POQty" id="POQty" class="form-control" type="text">
                         </div>
                     </div>
+                    </div>
+</div>
                     </div>
                     <br><br>
                     <div class="row">
@@ -370,7 +380,7 @@ if(!($this->session->has_userdata('user_id'))){
                        <label >Quantity:</label>
                         <div class="form-group-inline">
                             
-                            <input name="KITName" id="date2" class="form-control" type="text">
+                            <input name="POQty" id="POQty" class="form-control" type="text">
                         </div>
                     </div>
                        <div class="col-md-2">
@@ -431,7 +441,7 @@ if(!($this->session->has_userdata('user_id'))){
                                         </div>
                                     </div>
                                 </div>
-     <!--Table responsive-->
+    
     
                             </div>
                         </div>
@@ -440,230 +450,42 @@ if(!($this->session->has_userdata('user_id'))){
                     <?php
         $this->load->view('after-main');
        ?>
-        <!-- END Page Settings -->
-        <!-- base vendor bundle: 
-			 DOC: if you remove pace.js from core please note on Internet Explorer some CSS animations may execute before a page is fully loaded, resulting 'jump' animations 
-						+ pace.js (recommended)
-						+ jquery.js (core)
-						+ jquery-ui-cust.js (core)
-						+ popper.js (core)
-						+ bootstrap.js (core)
-						+ slimscroll.js (extension)
-						+ app.navigation.js (core)
-						+ ba-throttle-debounce.js (core)
-						+ waves.js (extension)
-						+ smartpanels.js (extension)
-						+ src/../jquery-snippets.js (core) -->
+    
 
 <script>
     
 $(document).ready(function(){
-    let today = new Date();
-let yesterday = new Date();
-
-yesterday.setDate(today.getDate() - 1);
-
-    document.getElementById('date').valueAsDate =new Date();
-
-          let current = new Date();
-     current.setMonth(current.getMonth()-1);
-   let next = new Date();
-     next.setMonth(next.getMonth()+1);
-     document.getElementById('date1').valueAsDate = new Date();
-      document.getElementById('date2').valueAsDate = new Date();
-        $('#data').after('<br><div id="nav" class="pagination"></div>');
-        var rowsShown = 10;
-        var rowsTotal = $('#data tbody tr').length;
-        var numPages = rowsTotal/rowsShown;
-        for(i = 0;i < numPages;i++) {
-            var pageNum = i + 1;
-            $('#nav').append('<li class="page-item"><a class="page-link" href="#" rel="'+i+'">'+pageNum+'</a> &nbsp;&nbsp; ');
+       $("#date1").change(function(e) {
+//alert('Heloo');
+loadPO()
+     });
+ $("#date2").change(function(e) {
+//alert('Heloo');
+loadPO()
+     });
+      
+     
+     function loadPO(){
+         //alert('Heloo');
+  var date1 =  $("#date1").val()
+    var date2 = $("#date2").val()
+            url = "<?php echo base_url("index.php/Kitsissuance/getPO/") ?>" + date1 + "/" + date2 
+             //alert(url);
+ $.get(url, function(data) {
+     $("#poSelectbox").html(data)
+ });
         }
-        $('#data tbody tr').hide();
-        $('#data tbody tr').slice(0, rowsShown).show();
-        $('#nav a:first').addClass('active');
-        $('#nav a').bind('click', function(){
 
-            $('#nav a').removeClass('active');
-            $(this).addClass('active');
-            var currPage = $(this).attr('rel');
-            var startItem = currPage * rowsShown;
-            var endItem = startItem + rowsShown;
-            $('#data tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
-                    css('display','table-row').animate({opacity:1}, 300);
-        });
-
-        $('#tableExport').on('click',".btn-delete-asset-type",function(e){
-            llid = $(this).attr('data-value')
-      postData = {
-        llid
-      }
-     
-      $('.btn-confirm-del-type').click(function(e){
-    url = '<?php echo base_url('assettype/deleteAssetType') ?>'
-      
-    $.post(url,postData,
-  function(data, status){
-    window.location.reload();  
-    
-  });
-
-      
-    })
-});
-
-$('#tableExport2').on('click',".btn-delete-asset-chart",function(e){
-            llid = $(this).attr('data-value')
-      postData = {
-        llid
-      }
-     
-      $('.btn-confirm-del-chart').click(function(e){
-    url = '<?php echo base_url('assettype/deleteAssetChart') ?>'
-      
-    $.post(url,postData,
-  function(data, status){
-    window.location.reload();  
-    
-  });
-
-      
-    })
-});
-
-
-$('#createAssetType').click(function(e){
-    $("#saveAssetType").css("display", "inline-block");
-    $("#updateAssetType").css("display", "none");
-    $("#myForm").trigger("reset");
-    $('form[name=form]').attr('action','<?php echo base_url('assettype/AddAssetType') ?>');
-});
-
-$('#createAssetChart').click(function(e){
-    $('select[name="assetProdType"]').val('0');
-    $('select[name="assetChartType"]').val('0');
-    $("#saveAssetChart").css("display", "inline-block");
-    $("#updateAssetChart").css("display", "none");
-    $("#myformChart").trigger("reset");
-    $('select[name=assetProdType]').val('0');
-    $('select[name=assetChartType]').val('0');
-    $('form[name=formChart]').attr('action','<?php echo base_url('assettype/AddAssetChart') ?>');
-});
-
-
-$('#tableExport').on('click',".btn-edit-asset-type",function(e){
-    $("#saveAssetType").css("display", "none");
-    $("#updateAssetType").css("display", "inline-block");
-    $('form[name=form]').attr('action','<?php echo base_url('assettype/editAssetTypes') ?>');
-        var formData =[];
-            llid = $(this).attr('data-value');
-      postData = {
-        llid
-      }
-      console.log(llid);
-      url = '<?php echo base_url('assettype/getAssetType') ?>'
-      
-    $.post(url,postData,
-  function(data, status){
-    var returnedData = JSON.parse(data);
-   
-    $("input[name=tid]").val(returnedData[0].TID);
-    $("input[name=assetName]").val(returnedData[0].AssertType);
-
-    if(returnedData[0].status == 1){
-        $('input[name=assetStatus]').attr('Checked','Checked');
-    //$("").checked = true;
+         $('.mySelectMatProEdit').select2(
+        {
+  dropdownParent: $('#exampleModalEditMat')
 }
-else{
-    $('input[name=assetStatus]').removeAttr('Checked');
-}
-
-  
-}); 
-
-
+    );
 });
 
 
-$('#tableExport2').on('click',".btn-edit-asset-chart",function(e){
-    $("#saveAssetChart").css("display", "none");
-    $("#updateAssetChart").css("display", "inline-block");
-    $('form[name=formChart]').attr('action','<?php echo base_url('assettype/editAssetCharts') ?>');
-        var formData =[];
-            llid = $(this).attr('data-value');
-      postData = {
-        llid
-      }
-      console.log(llid);
-      url = '<?php echo base_url('assettype/getChartValue') ?>'
-      
-    $.post(url,postData,
-  function(data, status){
-    var returnedData = JSON.parse(data);
-
-    $("input[name=cid]").val(returnedData[0].ID);
-    if(returnedData[0].PrdType == 1){
-        $('select[name="assetProdType"]').val('1')
-    }
-    else{
-        $('select[name="assetProdType"]').val('2')
-    }
-    
-   
-    url2 = '<?php echo base_url('assettype/getAssetTypes') ?>'    
-    $.post(url2,
-function(data, status){
-  var returnedData2 = JSON.parse(data);
-   dataaa1 = returnedData2;
-   console.log(returnedData[0]);
-   options = "<option value='' disabled>Select Asset Category  </option>"
-     for (i = 0; i < dataaa1.length; i++) {
-       if(returnedData[0].AssetType == dataaa1[i].TID){
-        options +=  '<option value="' + dataaa1[i].TID + '" selected>' + dataaa1[i].AssertType + '</option>'
-       }else{
-        options +=  '<option value="' + dataaa1[i].TID + '">' + dataaa1[i].AssertType + '</option>'
-       }
-     
-         }
-        $("select[name=assetChartType]").html(options)
-
-});
-    $("input[name=assetChartType]").val(returnedData[0].AssetType);
-    $("input[name=assetNameChart]").val(returnedData[0].Name);
-    $("input[name=UOM]").val(returnedData[0].UOM);
-
-    if(returnedData[0].Status == 1){
-        $('input[name=assetChartStatus]').attr('Checked','Checked');
-    //$("").checked = true;
-}
-else{
-    $('input[name=assetChartStatus]').removeAttr('Checked');
-}
- 
-}); 
-
-
-})
-
-
-    });
 </script>
-<script>
 
-document.getElementById("myAnchor").addEventListener("click", function(event){
-  event.preventDefault()
-  var x = document.getElementById("myDIV");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-
-
-});
-
-
-</script>  
 
 <?php
         $this->load->view('Foter');
