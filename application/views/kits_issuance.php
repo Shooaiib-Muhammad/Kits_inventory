@@ -324,10 +324,14 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
                                             
                                            
                                             <div class="tab-content py-3">
-                                                <div class="row">
-                                             
-                       
-                       
+                                                
+                                             <div class="row ">
+                         <div class="col-sm-1">
+                                            <div class="custom-control custom-switch">
+                                                                <input type="checkbox" class="custom-control-input" id="customSwitch2"  >
+                                                                <label class="custom-control-label" for="customSwitch2">Reprint</label>
+                                                            </div>
+                                           </div>
      <div class="col-md-3">
                        <label >Start Date :</label>
                         <div class="form-group-inline">
@@ -346,10 +350,10 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
                         <div class="row">
                      <div class="col-md-8" >
                        <div class="form-group">
-                            <lable class="form-control-label " for="duration">PO No:</lable>
+                            <lable class="form-control-label " for="duration">PO Code:</lable>
                             <br>
                            <select class="form-control mySelectMatProEdit" data-live-search="true" searchable="Search here.."  name="PO" id="PO">
-                             <option value="">Select PO :</option>
+                             <option value="">Select Code :</option>
                                
                             </select>
                         </div>
@@ -365,43 +369,66 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
 </div>
                     </div>
                     <br><br>
-                    <div class="row">
+                    <div class="row"  id="Kitsname">
                      <div class="col-md-2">
                     <div class="form-group">
                             <lable class="form-control-label" for="duration">Kits Name:</lable>
-                            
-                            <select class="form-control" name="duration" id="duration">
-                             <option value="">Select Duration :</option>
-                               
+                            <?php
+                            //print_r($Kits);
+                            ?>
+                            <select class="form-control kitsSelectbox" name="duration" id="Kits">
+                             <option value="">Select Kits Name :</option>
+                                <?php
+                                  foreach ($Kits as $Key) {
+                         ?>
+                        <option value="<?php echo $Key['RecID'] ?>" ><?php echo $Key['SerialNo'] ?></option>
+                        <?php
+                        }
+                  ?>
                             </select>
                         </div>
                         </div>
-                           <div class="col-md-2">
+                           <div class="col-md-1">
                        <label >Quantity:</label>
                         <div class="form-group-inline">
                             
-                            <input name="POQty" id="POQty" class="form-control" type="text">
+                            <input name="POQty" id="pquantity" class="form-control" type="text">
                         </div>
                     </div>
-                       <div class="col-md-2">
+                       <div class="col-md-1">
                        <label >Westage:</label>
                         <div class="form-group-inline">
                             
-                            <input name="SR" id="date2" class="form-control" type="text">
+                            <input name="SR" id="Westage" class="form-control" type="text" value="0">
                         </div>
                     </div>
-                       <div class="col-md-2">
+                       <div class="col-md-1">
                        <label >Balance:</label>
                         <div class="form-group-inline">
                             
-                            <input name="ER" id="date2" class="form-control" type="text">
+                            <input name="Balance" readonly="readonly"  id="Balance" class="form-control" type="text">
                         </div>
                     </div>
+                    <div class="col-md-2">
+                    <div class="form-group">
+                            <lable class="form-control-label" for="duration">Received by:</lable>
+                            <?php
+                            //print_r($Kits);
+                            ?>
+                            <select class="form-control kitsSelectbox" name="duration" id="Receivedby">
+                                <option value="">Select Received by :</option>
+                             <option value="658 Ashfa Ahmed">658 / Ashfa Ahmed</option>
+                             <option value="4636 Asad Ali">4636 / Asad Ali</option>
+                             <option value="1611 Abid Ali">1611 / Abid Ali</option>
+                                 <option value="211 Rizwan Akbar">211 / Rizwan Akbar</option>
+                            </select>
+                        </div>
+                        </div>
                      <div class="col-md-2">
                        <label >Issue  Date :</label>
                         <div class="form-group-inline">
                             
-                            <input name="date" id="date1" class="form-control" type="date">
+                            <input name="date" id="issuedate" class="form-control" type="date">
                         </div>
                     </div>
                      <div class="col-md-2">
@@ -416,24 +443,9 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
   <br><br>
 <div class="row">
      <div class="col-md-8">
-    <div class="table-responsive-lg">
+    <div class="table-responsive-lg" id="kitsissuance">
                         
-                                                <table class="table table-striped table-hover table-sm" id="tableExport">
-                                                     
-                                                        <thead>
-                                                            <tr>
-                                                               <th>PO Code</th>
-                                                                <th>Kit Name</th>
-                                                                <th>Quantity</th>
-                                                                <th>issue Status</th>
-                                                                <th>Issuee Date</th>
-                                                                 <th>Westage</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-
-                                    </tbody>
-                                </table>
+                                                
                             </div>
                             </div>
 </div>
@@ -454,17 +466,46 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
 
 <script>
     
+     $("#customSwitch2").change(function(e) {
+
+     });
 $(document).ready(function(){
+    loadData()
        $("#date1").change(function(e) {
 //alert('Heloo');
 loadPO()
+loadData()
      });
  $("#date2").change(function(e) {
 //alert('Heloo');
 loadPO()
+loadData()
      });
-      
-     
+     $("#Kits").change(function(e) {
+//alert('Heloo');
+loadbalance()
+     });
+      function loadData(){
+          //alert('Heloo');
+          var date1 =  $("#date1").val()
+    var date2 = $("#date2").val()
+            url = "<?php echo base_url("index.php/Kitsissuance/getkitsissuance/") ?>" + date1 + "/" + date2 
+           // alert(url);
+ $.get(url, function(data) {
+     $("#kitsissuance").html(data)
+ });
+      }
+  function   loadbalance(){
+      //alert('I am here');
+          var Kits =  $("#Kits").val()
+            url = "<?php echo base_url("index.php/Kitsissuance/json_by_machine_balance/") ?>" + Kits 
+             //alert(url);       
+ $.get(url, function(data) {
+ html = data[0].AvailableBalance
+console.log(html);
+                $("#Balance").val(html)
+ });
+        }
      function loadPO(){
          //alert('Heloo');
   var date1 =  $("#date1").val()
@@ -476,11 +517,62 @@ loadPO()
  });
         }
 
-         $('.mySelectMatProEdit').select2(
+         $('.kitsSelectbox').select2(
         {
-  dropdownParent: $('#exampleModalEditMat')
+  dropdownParent: $('#Kitsname')
 }
     );
+    $('#searchdata').click(function(){
+        //alert("heloo");
+     var PO = $("#PoCode").val();
+  var   KitsiD =$("#Kits").val();
+    var pquantity = $("#pquantity").val();
+    var issuedate = $('#issuedate').val();
+     var  westage = $("#Westage").val();
+      var  Balance = $("#Balance").val();
+       var  Receivedby = $("#Receivedby").val();
+      var replaced = Receivedby.replace("%20", " ");
+      var Status 
+      if ($('#customSwitch2').is(":checked"))
+{
+  Status=1;
+}
+else{
+    Status=0;
+}
+      
+    //alert(normal);
+    //alert(reprint);
+    if(Balance < pquantity){
+
+        alert("Kits Quantity is Greater then Balance")
+    }else{
+        //alert("i am here");
+if(PO==null){
+         alert("Please select PO Code")
+     }else if(KitsiD==null){
+         alert("Please select Kit")
+        }else if(issuedate==null){
+         alert("Please select PO issue date")
+        }else{
+url = "<?php echo base_url('index.php/kitsissuance/insert_data/') ?>"+ PO + "/" + KitsiD + "/" + pquantity + "/" + issuedate  + "/" + westage  + "/" + Status   +"/"+   replaced
+  //alert(url);
+   $.get(url, function(data){
+            
+              //loadData()
+              location.reload();
+            })
+     }
+    }
+     
+    //  alert(PO);
+    //  alert(KitsiD);
+    //  alert(pquantity);
+    //  alert(issuedate);
+    //  alert(westage);
+
+  
+  });
 });
 
 

@@ -14,7 +14,9 @@ class Kitsissuance extends CI_Controller
 	{
  		$data['Assettype'] = $this->ID->getAssetTypes();
 		$data['AssetChart'] = $this->ID->getAssetChart();
-
+		$data['Kits'] = $this->ID->getKits();
+// print_r($data['Kits']);
+// die;
         $this->load->view('kits_issuance',$data);
 
 		
@@ -156,4 +158,30 @@ $this->load->view('PO_Date',$data);
         ->set_status_header(200)
         ->set_output(json_encode($data));
     }
+					public function json_by_machine_balance($Kits){
+ 
+        $data = $this->ID->getKitbalance($Kits);
+      
+       
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_status_header(200)
+        ->set_output(json_encode($data));
+    }
+				 public function insert_data($PO,$KitsiD,$pquantity,$issuedate,$westage,$Status,$Receivedby){
+
+				
+		
+      $data = $this->ID->Kits_issuance_insert_data($PO,$KitsiD,$pquantity,$issuedate,$westage,$Status,str_replace("%20"," ",$Receivedby));
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_status_header(200)
+        ->set_output(json_encode($data));
+    }
+				public function getkitsissuance($date1,$date2){
+					$data['getkitsissuance'] =  $this->ID->getkitsissuance($date1,$date2);
+					// print_r($data['received']);
+					// die;
+        $this->load->view('getkitsissuance',$data);
+				}
 }

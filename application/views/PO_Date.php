@@ -2,7 +2,7 @@
                      
 <div class="col-md-8"  id="exampleModalEditMat">
                         <div class="form-group">
-                            <lable class="form-control-label" for="duration">PO No:</lable>
+                            <lable class="form-control-label" for="duration">PO Code:</lable>
                             <br>
                             <select class="form-control mySelectMatProEdit" data-live-search="true" searchable="Search here.."  name="PO" id="PoCode">
                              <option value="">Select PO :</option>
@@ -20,7 +20,7 @@
                        <label >Order Qty:</label>
                         <div class="form-group-inline">
                             
-                            <input name="POQty" id="POQty" class="form-control" type="text">
+                            <input name="POQty" id="POQty" class="form-control" type="text" readonly>
                         </div>
                     </div>
                  </div>

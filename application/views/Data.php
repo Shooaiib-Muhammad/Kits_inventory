@@ -111,7 +111,7 @@ foreach ($received as $keys){
                                                              
                                                                <td>
                                                                  <?php if($Status==1){ ?>
-                                                                <button type="button"  class="btn btn-primary btn-sm updatebtn" id="btn.<?php echo $RecID;?>" disabled="disabled">issued</button>
+                                                                <button type="button"  class="btn btn-primary btn-sm updatebtn" id="btn.<?php echo $RecID;?>" disabled="disabled">Done</button>
                                                               <?php
                                                                  }else{
                                                                    ?>

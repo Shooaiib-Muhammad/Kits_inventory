@@ -1064,8 +1064,6 @@ public function getlabelinfo(){
 }
 public function insert_data($start_quantity,$end_quantity,$kitid ,$labelid,$RDate){
      $MIS = $this->load->database('MIS', TRUE);
-     
-    
     for($start_quantity; $start_quantity<=$end_quantity; $start_quantity++){
  $date = $RDate;
  if($labelid == 1){
@@ -1077,14 +1075,7 @@ public function insert_data($start_quantity,$end_quantity,$kitid ,$labelid,$RDat
       (ID,KitName,Qty,EntryDate,SerialNO,RullQty, NoOFRulls) VALUES ('$labelid', '$kitid',1,'$date', $start_quantity,'8','4813')");;
  }       
                 }
-                // if ($query) {
-                //         $this->session->set_flashdata('Proinfo', 'Data has been Saved');
-                //         redirect('kitsReceived');
-                //     } else {
-                //         $this->session->set_flashdata('danger', 'There is an error while creating.');
-                //         redirect('kitsReceived');
-                //     }
-                ///die;
+                
             }
             
 public function getData($date1,$date2,$Type){
@@ -1136,5 +1127,46 @@ public function POQty($PO){
                 ->where("PO", $PO)
                 ->get("view_label_print")
                 ->result();
+}
+public function getKits(){
+    
+ $MIS = $this->load->database('MIS', TRUE);
+    $query = $MIS->query("SELECT       view_Final_Kits.*
+FROM            view_Final_Kits");
+return $query->result_array();
+}
+public function getKitbalance($Kits){
+    
+ $MIS = $this->load->database('MIS', TRUE);
+       return  $MIS
+                ->where("RecID", $Kits)
+                ->get("view_Final_Kits")
+                ->result();
+}
+public function Kits_issuance_insert_data($PO,$KitsiD,$pquantity,$issuedate,$westage,$Status,$Receivedby){
+    if($Status==0){
+$Type='normal';
+    }else{
+     $Type='reprint';   
+    }
+      $user_name =  $this->session->userdata('user_name');
+ $MIS = $this->load->database('MIS', TRUE);
+ //$date = $RDate;
+  $query = $MIS->query("INSERT  INTO tbl_kit_issuance
+      (PO,KitID,KitQty,IssuanceDate,Wastage,Type,Issuedby,Receivedby) VALUES ('$PO', '$KitsiD',$pquantity,'$issuedate', $westage,'$Type','$user_name','$Receivedby')");;
+
+            
+}
+public function getkitsissuance($date1,$date2){
+    
+
+$MIS = $this->load->database('MIS', TRUE);
+    $query = $MIS->query("SELECT        dbo.tbl_kit_issuance.TID, dbo.tbl_kit_issuance.PO, dbo.tbl_kit_issuance.KitID, dbo.tbl_kit_issuance.KitQty, CONVERT(varchar, dbo.tbl_kit_issuance.IssuanceDate, 103) AS IssuanceDate, dbo.tbl_kit_issuance.Wastage, 
+                         dbo.View_Label.SerialNo, dbo.View_Label_PO.POCode, dbo.View_Label_PO.OrderQty, dbo.tbl_kit_issuance.Type,dbo.tbl_kit_issuance.Issuedby, dbo.tbl_kit_issuance.Receivedby
+FROM            dbo.View_Label INNER JOIN
+                         dbo.tbl_kit_issuance ON dbo.View_Label.RecID = dbo.tbl_kit_issuance.KitID INNER JOIN
+                         dbo.View_Label_PO ON dbo.tbl_kit_issuance.PO = dbo.View_Label_PO.PO
+WHERE        (dbo.tbl_kit_issuance.Type IS NOT NULL) AND (tbl_kit_issuance.IssuanceDate BETWEEN '$date1' AND '$date2')");
+return $query->result_array();
 }
 }
