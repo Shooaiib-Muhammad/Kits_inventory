@@ -32,26 +32,15 @@
 $(document).ready(function(){
       
 $("#PoCode").change(function(e) {
-//alert('i am here');
 loadQty()
      });
      function loadQty(){
-         //alert('Heloo');
           var PO =  $("#PoCode").val()
-   
-            url = "<?php echo base_url("index.php/Kitsissuance/json_by_machine/") ?>" + PO 
-            //alert(url);
+            url = "<?php echo base_url("index.php/Kitsissuance/json_by_machine/") ?>" + PO        
  $.get(url, function(data) {
-    //alertconsole.log(data);
-
-
-                    html = data[0].OrderQty
-                     //html1 = data[0].ID
-                    // html += '<option value="'+element.SecID+'" >'+element.SecName+'</option>'
-                
+ html = data[0].OrderQty
 console.log(html);
                 $("#POQty").val(html)
-                 //$("#ID").val(html1)
  });
         }
          $('.mySelectMatProEdit').select2(

@@ -168,11 +168,11 @@ $this->load->view('PO_Date',$data);
         ->set_status_header(200)
         ->set_output(json_encode($data));
     }
-				 public function insert_data($PO,$KitsiD,$pquantity,$issuedate,$westage,$Status,$Receivedby){
+				 public function insert_data($PO,$KitsiD,$pquantity,$issuedate,$westage,$Status){
 
 				
 		
-      $data = $this->ID->Kits_issuance_insert_data($PO,$KitsiD,$pquantity,$issuedate,$westage,$Status,str_replace("%20"," ",$Receivedby));
+      $data = $this->ID->Kits_issuance_insert_data($PO,$KitsiD,$pquantity,$issuedate,$westage,$Status);
         return $this->output
         ->set_content_type('application/json')
         ->set_status_header(200)

@@ -4,10 +4,7 @@
 if(!($this->session->has_userdata('user_id'))){
   redirect('login');
 }else{
-?>
 
-
-<?php
       $this->load->view('header');
     ?>
 
@@ -409,7 +406,7 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
                             <input name="Balance" readonly="readonly"  id="Balance" class="form-control" type="text">
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <!-- <div class="col-md-2">
                     <div class="form-group">
                             <lable class="form-control-label" for="duration">Received by:</lable>
                             <?php
@@ -423,12 +420,12 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
                                  <option value="211 Rizwan Akbar">211 / Rizwan Akbar</option>
                             </select>
                         </div>
-                        </div>
+                        </div> -->
                      <div class="col-md-2">
-                       <label >Issue  Date :</label>
+                       <label >Print Date :</label>
                         <div class="form-group-inline">
                             
-                            <input name="date" id="issuedate" class="form-control" type="date">
+                            <input name="date" id="issuedate" class="form-control" value="<?php echo $CurrentDate;?>"  type="date">
                         </div>
                     </div>
                      <div class="col-md-2">
@@ -483,6 +480,15 @@ loadData()
      });
      $("#Kits").change(function(e) {
 //alert('Heloo');
+var PoCode = $("#PoCode").val(); 
+//alert(PoCode);
+  url = "<?php echo base_url("index.php/Kitsissuance/json_by_machine/") ?>" + PoCode  
+  //alert(url);      
+ $.get(url, function(data) {
+ html = data[0].OrderQty
+console.log(html);
+                $("#pquantity").val(html)
+ });
 loadbalance()
      });
       function loadData(){
@@ -523,15 +529,15 @@ console.log(html);
 }
     );
     $('#searchdata').click(function(){
-        //alert("heloo");
+        alert("heloo");
      var PO = $("#PoCode").val();
   var   KitsiD =$("#Kits").val();
     var pquantity = $("#pquantity").val();
     var issuedate = $('#issuedate').val();
      var  westage = $("#Westage").val();
       var  Balance = $("#Balance").val();
-       var  Receivedby = $("#Receivedby").val();
-      var replaced = Receivedby.replace("%20", " ");
+       //var  Receivedby = $("#Receivedby").val();
+      //ar replaced = Receivedby.replace("%20", " ");
       var Status 
       if ($('#customSwitch2').is(":checked"))
 {
@@ -555,8 +561,8 @@ if(PO==null){
         }else if(issuedate==null){
          alert("Please select PO issue date")
         }else{
-url = "<?php echo base_url('index.php/kitsissuance/insert_data/') ?>"+ PO + "/" + KitsiD + "/" + pquantity + "/" + issuedate  + "/" + westage  + "/" + Status   +"/"+   replaced
-  //alert(url);
+url = "<?php echo base_url('index.php/kitsissuance/insert_data/') ?>"+ PO + "/" + KitsiD + "/" + pquantity + "/" + issuedate  + "/" + westage  + "/" + Status   
+  alert(url);
    $.get(url, function(data){
             
               //loadData()

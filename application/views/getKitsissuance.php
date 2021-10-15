@@ -10,10 +10,10 @@
                                                                <th>PO Code</th>
                                                                 <th>Kit Name</th>
                                                                 <th>Quantity</th>
-                                                                <th>Issue Date</th>
+                                                                <th>Print Date</th>
                                                                  <th>Westage</th>
                                                                   <th>Issued By</th>
-                                                                   <th>Received By</th>
+                                                                
                                                                   <th>Status</th>
                                                             </tr>
                                                         </thead>
@@ -39,7 +39,7 @@ foreach ($getkitsissuance as $keys){
   <td><?php Echo $IssuanceDate;?></td>
   <td><?php Echo $Wastage;?></td> 
   <td><?php Echo $Issuedby;?></td> 
-  <td><?php Echo $Receivedby;?></td> 
+ 
   <td>
    
                                                      

@@ -1143,7 +1143,7 @@ public function getKitbalance($Kits){
                 ->get("view_Final_Kits")
                 ->result();
 }
-public function Kits_issuance_insert_data($PO,$KitsiD,$pquantity,$issuedate,$westage,$Status,$Receivedby){
+public function Kits_issuance_insert_data($PO,$KitsiD,$pquantity,$issuedate,$westage,$Status){
     if($Status==0){
 $Type='normal';
     }else{
@@ -1153,7 +1153,7 @@ $Type='normal';
  $MIS = $this->load->database('MIS', TRUE);
  //$date = $RDate;
   $query = $MIS->query("INSERT  INTO tbl_kit_issuance
-      (PO,KitID,KitQty,IssuanceDate,Wastage,Type,Issuedby,Receivedby) VALUES ('$PO', '$KitsiD',$pquantity,'$issuedate', $westage,'$Type','$user_name','$Receivedby')");;
+      (PO,KitID,KitQty,IssuanceDate,Wastage,Type,Issuedby) VALUES ('$PO', '$KitsiD',$pquantity,'$issuedate', $westage,'$Type','$user_name')");;
 
             
 }
