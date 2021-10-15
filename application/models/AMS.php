@@ -1162,11 +1162,20 @@ public function getkitsissuance($date1,$date2){
 
 $MIS = $this->load->database('MIS', TRUE);
     $query = $MIS->query("SELECT        dbo.tbl_kit_issuance.TID, dbo.tbl_kit_issuance.PO, dbo.tbl_kit_issuance.KitID, dbo.tbl_kit_issuance.KitQty, CONVERT(varchar, dbo.tbl_kit_issuance.IssuanceDate, 103) AS IssuanceDate, dbo.tbl_kit_issuance.Wastage, 
-                         dbo.View_Label.SerialNo, dbo.View_Label_PO.POCode, dbo.View_Label_PO.OrderQty, dbo.tbl_kit_issuance.Type,dbo.tbl_kit_issuance.Issuedby, dbo.tbl_kit_issuance.Receivedby
+                         dbo.View_Label.SerialNo, dbo.View_Label_PO.POCode, dbo.View_Label_PO.OrderQty, dbo.tbl_kit_issuance.Type, dbo.tbl_kit_issuance.Issuedby, dbo.tbl_kit_issuance.Receivedby, CONVERT(Varchar, 
+                         dbo.tbl_kit_issuance.IssueDate, 103) AS IssueDate
 FROM            dbo.View_Label INNER JOIN
                          dbo.tbl_kit_issuance ON dbo.View_Label.RecID = dbo.tbl_kit_issuance.KitID INNER JOIN
                          dbo.View_Label_PO ON dbo.tbl_kit_issuance.PO = dbo.View_Label_PO.PO
 WHERE        (dbo.tbl_kit_issuance.Type IS NOT NULL) AND (tbl_kit_issuance.IssuanceDate BETWEEN '$date1' AND '$date2')");
 return $query->result_array();
+}
+public function updateKitsissuance($RBy,$iDate ,$RID){
+    $MIS = $this->load->database('MIS', TRUE);
+    $query = $MIS->query("UPDATE tbl_kit_issuance  
+            SET   Receivedby  =  '$RBy',IssueDate  =  '$iDate'
+          WHERE  TID='$RID'");
+            
+            
 }
 }

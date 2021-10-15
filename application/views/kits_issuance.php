@@ -439,7 +439,7 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
 </div>
   <br><br>
 <div class="row">
-     <div class="col-md-8">
+     <div class="col-md-12">
     <div class="table-responsive-lg" id="kitsissuance">
                         
                                                 
@@ -529,7 +529,7 @@ console.log(html);
 }
     );
     $('#searchdata').click(function(){
-        alert("heloo");
+        //alert("heloo");
      var PO = $("#PoCode").val();
   var   KitsiD =$("#Kits").val();
     var pquantity = $("#pquantity").val();
@@ -562,7 +562,7 @@ if(PO==null){
          alert("Please select PO issue date")
         }else{
 url = "<?php echo base_url('index.php/kitsissuance/insert_data/') ?>"+ PO + "/" + KitsiD + "/" + pquantity + "/" + issuedate  + "/" + westage  + "/" + Status   
-  alert(url);
+  //alert(url);
    $.get(url, function(data){
             
               //loadData()

@@ -184,4 +184,14 @@ $this->load->view('PO_Date',$data);
 					// die;
         $this->load->view('getkitsissuance',$data);
 				}
+				public function updateRecord($Receivedby,$iDate ,$RID){
+					$RBy=str_replace("%20"," ",$Receivedby);
+					 //$this->ID->updateKitsissuance($RBy,$iDate ,$RID);
+			
+$data = $this->ID->updateKitsissuance($RBy,$iDate ,$RID);
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_status_header(200)
+        ->set_output(json_encode($data));
+				}
 }
