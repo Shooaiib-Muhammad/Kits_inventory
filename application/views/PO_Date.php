@@ -1,6 +1,6 @@
  <div class="row">
                      
-<div class="col-md-8"  id="exampleModalEditMat">
+<div class="col-md-5"  id="exampleModalEditMat">
                         <div class="form-group">
                             <lable class="form-control-label" for="duration">PO Code:</lable>
                             <br>
@@ -23,6 +23,13 @@
                             <input name="POQty" id="POQty" class="form-control" type="text" readonly>
                         </div>
                     </div>
+                    <div class="col-md-3">
+                       <label >Balance:</label>
+                        <div class="form-group-inline">
+                            
+                            <input name="Balance" id="balance" class="form-control" type="text" readonly>
+                        </div>
+                    </div>
                  </div>
 
 
@@ -39,8 +46,10 @@ loadQty()
             url = "<?php echo base_url("index.php/Kitsissuance/json_by_machine/") ?>" + PO        
  $.get(url, function(data) {
  html = data[0].OrderQty
-console.log(html);
+  balance = data[0].Balance
+//console.log(html);
                 $("#POQty").val(html)
+                  $("#balance").val(balance)
  });
         }
          $('.mySelectMatProEdit').select2(

@@ -6,6 +6,27 @@
 
 
 
+ $(".deletebtn").click(function(e) {
+        let id= this.id;
+     let split_value = id.split(".");
+     var RID =split_value[1];
+     var Datee =$(`#Datee${split_value[1]}`).val();
+     let text;
+     let person = prompt("Are Your Want to Delete Printed", "");
+  if (person == null) {
+    text = "User cancelled the prompt.";
+  } else {
+    text = "Deleted Successfully";
+      url = "<?php echo base_url('index.php/Kitsissuance/Delete/') ?>"+ RID
+  
+   $.get(url, function(data){
+     alert(" Printed Delete Successfully");
+    location.reload();
+             
+            });
+  }
+    document.getElementById("demo").innerHTML = text;
+       });
   $(".updatebtn").click(function(e) {
        //alert("heloo");
      let id= this.id;
@@ -56,6 +77,8 @@
    
      </script>
     <div class="table-responsive-lg" id="Data">
+     <p id="demo" ></p>
+      
         <table class="table table-striped table-hover table-sm" id="tableExport">
                                                         <thead>
                                                             <tr>
@@ -69,6 +92,7 @@
                                                                 
                                                                     <th>Issue Date</th>
                                                                      <th>Issued To</th>
+                                                                      <th>Action</th>
                                                                       <th>Action</th>
                                                             </tr>
                                                         </thead>
@@ -143,7 +167,7 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
     ?>
                             <select class="form-control kitsSelectbox" name="duration" id="Receivedby<?php echo $TID;?>">
                                 
-                             <option value="658 Ashfa Ahmed">658 / Ashfa Ahmed</option>
+                             <option value="658 Ashfaq Ahmed">658 / Ashfaq Ahmed</option>
                              <option value="4636 Asad Ali">4636 / Asad Ali</option>
                              <option value="1611 Abid Ali">1611 / Abid Ali</option>
                                  <option value="211 Rizwan Akbar">211 / Rizwan Akbar</option>
@@ -165,6 +189,21 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
                             }
 ?>
                         </td>
+                        <td> 
+                             <?php
+                            if(!Empty($IssueDate)){
+?>  
+                        <button class="btn btn-primary btn-xs" >Saved</button>
+                      
+                         <?php
+                            }else{
+                              ?>
+                               <button class="btn btn-danger btn-xs deletebtn" id="btn.<?php echo $TID;?>" >Delete</button>
+                              <?php
+                            }
+                        ?>
+                        </td>
+                     
  
 </tr>
                                                                                     

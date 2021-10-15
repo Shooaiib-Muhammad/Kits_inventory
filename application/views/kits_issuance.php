@@ -343,9 +343,10 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
                             <input name="date" id="date2" class="form-control" type="date" value="<?php echo $CurrentDate;?>" >
                         </div>
                     </div>
+                    </div>
                     <div id="poSelectbox" >
                         <div class="row">
-                     <div class="col-md-8" >
+                     <div class="col-md-5" >
                        <div class="form-group">
                             <lable class="form-control-label " for="duration">PO Code:</lable>
                             <br>
@@ -360,6 +361,13 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
                         <div class="form-group-inline">
                             
                             <input name="POQty" id="POQty" class="form-control" type="text">
+                        </div>
+                    </div>
+                     <div class="col-md-3">
+                       <label >Balance:</label>
+                        <div class="form-group-inline">
+                            
+                            <input name="Balance" id="balance" class="form-control" type="text" readonly>
                         </div>
                     </div>
                     </div>
@@ -454,8 +462,9 @@ $CurrentDate=$Year.'-'.$Month.'-'.$Day;
     
                             </div>
                         </div>
+                        </div>
                     </main>
-            
+            </div>
                     <?php
         $this->load->view('after-main');
        ?>
@@ -549,10 +558,10 @@ else{
       
     //alert(normal);
     //alert(reprint);
-    if(Balance < pquantity){
+    // if(Balance < pquantity){
 
-        alert("Kits Quantity is Greater then Balance")
-    }else{
+    //     alert("Kits Quantity is Greater then Balance")
+    // }else{
         //alert("i am here");
 if(PO==null){
          alert("Please select PO Code")
@@ -569,7 +578,7 @@ url = "<?php echo base_url('index.php/kitsissuance/insert_data/') ?>"+ PO + "/" 
               location.reload();
             })
      }
-    }
+    
      
     //  alert(PO);
     //  alert(KitsiD);

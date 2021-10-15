@@ -1178,4 +1178,9 @@ public function updateKitsissuance($RBy,$iDate ,$RID){
             
             
 }
+public function Deleteissuance($TID){
+    $MIS = $this->load->database('MIS', TRUE);
+        $query=$MIS->query("DELETE FROM tbl_kit_issuance
+        WHERE TID='$TID'");
+}
 }

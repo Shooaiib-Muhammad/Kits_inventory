@@ -194,4 +194,12 @@ $data = $this->ID->updateKitsissuance($RBy,$iDate ,$RID);
         ->set_status_header(200)
         ->set_output(json_encode($data));
 				}
+				public function Delete($TID){
+			
+$data = $this->ID->Deleteissuance($TID);
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_status_header(200)
+        ->set_output(json_encode($data));
+				}
 }
