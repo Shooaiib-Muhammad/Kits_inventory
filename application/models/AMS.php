@@ -1116,7 +1116,7 @@ public function getpo($date1,$date2){
         //         ->get("view_label_print")
         //         ->result();
                   $query = $MIS->query("SELECT        POCode, PO, OrderQty, printDate
-FROM            view_label_print
+FROM            view_label_print_final
 WHERE        (printDate BETWEEN '$date1' AND '$date2')");
             return $query->result_array();
 }
@@ -1125,7 +1125,7 @@ public function POQty($PO){
    
         return  $MIS
                 ->where("PO", $PO)
-                ->get("view_label_print")
+                ->get("view_label_print_final")
                 ->result();
 }
 public function getKits(){

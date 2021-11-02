@@ -495,6 +495,7 @@ var PoCode = $("#PoCode").val();
   //alert(url);      
  $.get(url, function(data) {
  html = data[0].OrderQty
+ 
 console.log(html);
                 $("#pquantity").val(html)
  });
